@@ -1,7 +1,11 @@
 #include <stdio.h>
+// initial tank capacities
+#define NUM_TANKS 4
+int maxCapacities[NUM_TANKS] = {100, 75, 50, 150};
+int tanks[NUM_TANKS] = {100, 75, 50, 150};
 
 int main (){
-    // initial tank capacities
+
 
     // simulate 12 cars arriving (you could loop indefinitely or stop with user input)
 
