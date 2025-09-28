@@ -1,22 +1,30 @@
 #include <stdio.h>
-#include <stdlib.h> 
-// initial tank capacities
+#include <stdlib.h>
+
+// Initial tank capacities
 #define NUM_TANKS 4
 int maxCapacities[NUM_TANKS] = {100, 75, 50, 150};
 int tanks[NUM_TANKS] = {100, 75, 50, 150};
-// function prototypes
+
+// Function prototypes
 int carArrived();
 void refillRequest(int pumpNumber);
 void printTanks();
 
-int main (){
-
-
-    // simulate 12 cars arriving (you could loop indefinitely or stop with user input)
+int main() {
     int pump;
-    
-    // Simulate 12 cars arriving (you could loop indefinitely or stop with user input)
-    for (int i = 0; i < 12; i++) {
+    unsigned int seed;
+    int numCars;
+
+    // Read seed and number of cars from input (to match test cases)
+    if (scanf("%u %d", &seed, &numCars) != 2) {
+        printf("Error: expected seed and number of cars as input.\n");
+        return 1;
+    }
+
+    srand(seed); // set random seed
+
+    for (int i = 0; i < numCars; i++) {
         pump = carArrived(); // get which pump is used
         printf("Car arrived at pump %d.\n", pump + 1);
 
@@ -34,9 +42,8 @@ int main (){
     }
 
     return 0;
-
-
 }
+
 // Simulate a car arriving at a random pump
 int carArrived() {
     return rand() % NUM_TANKS; // returns pump number 0–3
