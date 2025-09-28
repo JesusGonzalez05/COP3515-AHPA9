@@ -4,7 +4,10 @@
 #define NUM_TANKS 4
 int maxCapacities[NUM_TANKS] = {100, 75, 50, 150};
 int tanks[NUM_TANKS] = {100, 75, 50, 150};
-
+// function prototypes
+int carArrived();
+void refillRequest(int pumpNumber);
+void printTanks();
 
 int main (){
 
