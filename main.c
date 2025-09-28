@@ -12,20 +12,18 @@ void refillRequest(int pumpNumber);
 void printTanks();
 
 int main() {
-    int pump;
     unsigned int seed;
     int numCars;
 
-    // Read seed and number of cars from input (to match test cases)
+    // Read seed and number of cars
     if (scanf("%u %d", &seed, &numCars) != 2) {
-        printf("Error: expected seed and number of cars as input.\n");
-        return 1;
+        return 1; // exit if inputs are missing
     }
 
-    srand(seed); // set random seed
+    srand(seed); // seed RNG
 
     for (int i = 0; i < numCars; i++) {
-        pump = carArrived(); // get which pump is used
+        int pump = carArrived(); // get which pump is used
         printf("Car arrived at pump %d.\n", pump + 1);
 
         // Serve car: reduce 10 gallons from the selected tank
@@ -38,29 +36,26 @@ int main() {
 
         // Print current tank status
         printTanks();
-        printf("\n");
     }
 
     return 0;
 }
 
-// Simulate a car arriving at a random pump
+// Pick a random pump 0–3
 int carArrived() {
-    return rand() % NUM_TANKS; // returns pump number 0–3
+    return rand() % NUM_TANKS;
 }
 
-// Simulate requesting a refill truck
+// Refill when below 20
 void refillRequest(int pumpNumber) {
     printf("Pump %d tank low! Requesting refill...\n", pumpNumber + 1);
-    tanks[pumpNumber] = maxCapacities[pumpNumber]; // refill to full capacity
+    tanks[pumpNumber] = maxCapacities[pumpNumber]; // refill to full
     printf("Pump %d tank refilled to %d gallons.\n", pumpNumber + 1, tanks[pumpNumber]);
 }
 
-// Print the status of all tanks
+// Print status of all tanks
 void printTanks() {
-    printf("Current tank levels: ");
     for (int i = 0; i < NUM_TANKS; i++) {
-        printf("[Pump %d: %d] ", i + 1, tanks[i]);
+        printf("Pump %d: %d gallons\n", i + 1, tanks[i]);
     }
-    printf("\n");
 }
