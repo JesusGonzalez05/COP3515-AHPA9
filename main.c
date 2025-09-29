@@ -1,61 +1,57 @@
+/*
+ * AHPA #9: A Gas Station
+ *
+ * You have been asked to create a C program to manage the gas 
+ * pumps at a gas station. The station has four pumps connected 
+ * to four tanks with capacities: 100, 75, 50, and 150. Every 
+ * time a car fills up it takes 10 gallons. You‚Äôll know that a 
+ * car has arrived because the carArrived function will return 
+ * with a pump number. After a car has filled up, print out the 
+ * current contents of all four tanks.
+ *
+ * Write a program that can track each of the four tanks. 
+ * Update the amount of gas remaining in a tank when a car 
+ * fills up. When a tank gets to less than 20 gallons of gas 
+ * remaining, make a call to request a refill truck visit the 
+ * station (refillRequest). This will cause the tank to be 
+ * refilled automatically.
+ *
+ * Student Name: 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
-// Initial tank capacities
-#define NUM_TANKS 4
-int maxCapacities[NUM_TANKS] = {100, 75, 50, 150};
-int tanks[NUM_TANKS] = {100, 75, 50, 150};
+/*
+ * Function Name: carArrived
+ *
+ * Description: Returns a random integer between 1-4.
+ *
+ * Input: None
+ *
+ * Output: Random integer between 1-4
+ *
+ */
 
-// Function prototypes
-int carArrived();
-void refillRequest(int pumpNumber);
-void printTanks();
+int carArrived (void) {
+  int randomnumber;
 
-int main() {
-    unsigned int seed;
-    int numCars;
+  /* Generate a random number between 0-10. Keep generating numbers
+   * until you generate one that is between 0-3. */
+  
+  do {
+    randomnumber = rand() % 10;  
+  } while (randomnumber > 3);
 
-    // Read seed and number of cars
-    if (scanf("%u %d", &seed, &numCars) != 2) {
-        return 1; // exit if inputs are missing
-    }
-
-    srand(seed); // seed RNG
-
-    for (int i = 0; i < numCars; i++) {
-        int pump = carArrived(); // get which pump is used
-        printf("Car arrived at pump %d.\n", pump + 1);
-
-        // Serve car: reduce 10 gallons from the selected tank
-        tanks[pump] -= 10;
-
-        // Check if tank needs refill
-        if (tanks[pump] < 20) {
-            refillRequest(pump);
-        }
-
-        // Print current tank status
-        printTanks();
-    }
-
-    return 0;
+  /* Add one to the generated random number to make it between 1-4 */
+  return randomnumber+1;
 }
 
-// Pick a random pump 0–3
-int carArrived() {
-    return rand() % NUM_TANKS;
-}
 
-// Refill when below 20
-void refillRequest(int pumpNumber) {
-    printf("Pump %d tank low! Requesting refill...\n", pumpNumber + 1);
-    tanks[pumpNumber] = maxCapacities[pumpNumber]; // refill to full
-    printf("Pump %d tank refilled to %d gallons.\n", pumpNumber + 1, tanks[pumpNumber]);
-}
+int main(void) {
+  /* Initialize the random number generator based on current time */
+  srand(time(NULL));
 
-// Print status of all tanks
-void printTanks() {
-    for (int i = 0; i < NUM_TANKS; i++) {
-        printf("Pump %d: %d gallons\n", i + 1, tanks[i]);
-    }
+  
 }
