@@ -16,42 +16,49 @@
  * station (refillRequest). This will cause the tank to be 
  * refilled automatically.
  *
- * Student Name: 
+ * Student Name: Jesus Gonzalez
  */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <time.h>  // Include time.h as requested
 
-/*
- * Function Name: carArrived
- *
- * Description: Returns a random integer between 1-4.
- *
- * Input: None
- *
- * Output: Random integer between 1-4
- *
- */
-
-int carArrived (void) {
-  int randomnumber;
-
-  /* Generate a random number between 0-10. Keep generating numbers
-   * until you generate one that is between 0-3. */
-  
-  do {
-    randomnumber = rand() % 10;  
-  } while (randomnumber > 3);
-
-  /* Add one to the generated random number to make it between 1-4 */
-  return randomnumber+1;
+/* Provided carArrived function */
+int carArrived(void) {
+    int randomnumber;
+    do {
+        randomnumber = rand() % 10;
+    } while (randomnumber > 3);
+    return randomnumber + 1;
 }
 
-
 int main(void) {
-  /* Initialize the random number generator based on current time */
-  srand(time(NULL));
+    int N, S;
+    scanf("%d %d", &N, &S);   // Read number of cars and seed
 
-  
+    srand(S);  // Seed the RNG using input
+
+    const int caps[4] = {100, 75, 50, 150};
+    int tanks[4]      = {100, 75, 50, 150};
+
+    for (int i = 0; i < N; i++) {
+        int pump = carArrived();  // Get pump number (1-4)
+        int idx = pump - 1;
+
+        // Subtract 10 gallons
+        tanks[idx] -= 10;
+
+        // Print pump and tank status
+        printf("Pump %d: -10 gal\n", pump);
+        printf("Tanks: [%d, %d, %d, %d]\n", tanks[0], tanks[1], tanks[2], tanks[3]);
+
+        // Refill if tank is below 20 gallons
+        if (tanks[idx] < 20) {
+            tanks[idx] = caps[idx];  // Refill to full
+            printf("Refill: Tank %d refilled to %d\n", pump, caps[idx]);
+            printf("Tanks: [%d, %d, %d, %d]\n", tanks[0], tanks[1], tanks[2], tanks[3]);
+        }
+    }
+
+    return 0;
 }
